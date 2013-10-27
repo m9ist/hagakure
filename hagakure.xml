@@ -1,0 +1,123 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Texture name="HagakureButtonUpTexture" file="Interface\Buttons\UI-Panel-Button-Up" virtual="true">
+        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+    </Texture>
+    <Texture name="HagakureButtonDownTexture" file="Interface\Buttons\UI-Panel-Button-Down" virtual="true">
+        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+    </Texture>
+    <Texture name="HagakureButtonDisabledTexture" file="Interface\Buttons\UI-Panel-Button-Disabled" virtual="true">
+        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+    </Texture>
+    <Texture name="HagakureButtonDisabledDownTexture" file="Interface\Buttons\UI-Panel-Button-Disabled-Down" virtual="true">
+        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+    </Texture>
+    <Texture name="HagakureButtonHighlightTexture" file="Interface\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD" virtual="true">
+        <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+    </Texture>
+   <Button name="HagakureButtonTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="40" y="22"/>
+        </Size>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentLeft" file="">
+                    <Size>
+                        <AbsDimension x="12" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMLEFT"/>
+                    </Anchors>
+                    <TexCoords left="0" right="0.09375" top="0" bottom="0.6875"/>
+                </Texture>
+                <Texture name="$parentRight" file="">
+                    <Size>
+                        <AbsDimension x="12" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <TexCoords left="0.925" right="1" top="0" bottom="0.6875"/> <!-- left="0.53125" right="0.625" top="0" bottom="0.6875" -->
+                </Texture>
+                <Texture name="$parentMiddle" file="">
+                    <Size>
+                        <AbsDimension x="12" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentLeft" relativePoint="TOPRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT" relativeTo="$parentRight" relativePoint="BOTTOMLEFT"/>
+                    </Anchors>
+                    <TexCoords left="0.09375" right="0.925" top="0" bottom="0.6875"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad>
+				if ( not self.textures ) then return; end;
+                if ( not self:IsEnabled() ) then
+                    local name = self:GetName();
+                    _G[name.."Left"]:SetTexture(self.textures.disabled);
+                    _G[name.."Middle"]:SetTexture(self.textures.disabled);
+                    _G[name.."Right"]:SetTexture(self.textures.disabled);
+                end
+            </OnLoad>
+            <OnMouseDown>
+                if ( self:IsEnabled() ) then
+                    local name = self:GetName();
+                    _G[name.."Left"]:SetTexture(self.textures.pushed);
+                    _G[name.."Middle"]:SetTexture(self.textures.pushed);
+                    _G[name.."Right"]:SetTexture(self.textures.pushed);
+                end
+            </OnMouseDown>
+            <OnMouseUp>
+                if ( self:IsEnabled() ) then
+                    local name = self:GetName();
+                    _G[name.."Left"]:SetTexture(self.textures.normal);
+                    _G[name.."Middle"]:SetTexture(self.textures.normal);
+                    _G[name.."Right"]:SetTexture(self.textures.normal);
+                end
+            </OnMouseUp>
+            <OnShow>
+ 				if ( not self.textures ) then return; end;
+               if ( self:IsEnabled() ) then
+                    -- we need to reset our textures just in case we were hidden before a mouse up fired
+                    local name = self:GetName();
+					if (self.textures) then
+						_G[name.."Left"]:SetTexture(self.textures.normal);
+						_G[name.."Middle"]:SetTexture(self.textures.normal);
+						_G[name.."Right"]:SetTexture(self.textures.normal);
+					end;
+                end
+            </OnShow>
+            <OnDisable>
+                local name = self:GetName();
+                _G[name.."Left"]:SetTexture(self.textures.disabled);
+                _G[name.."Middle"]:SetTexture(self.textures.disabled);
+                _G[name.."Right"]:SetTexture(self.textures.disabled);
+            </OnDisable>
+            <OnEnable>
+                local name = self:GetName();
+                _G[name.."Left"]:SetTexture(self.textures.normal);
+                _G[name.."Middle"]:SetTexture(self.textures.normal);
+                _G[name.."Right"]:SetTexture(self.textures.normal);
+            </OnEnable>
+            <OnEnter>
+                if(self.tooltipText ~= nil) then
+                    GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, self.newbieText);
+                end
+            </OnEnter>
+            <OnLeave>
+                if(self.tooltipText ~= nil) then 
+                    GameTooltip:Hide();
+                end
+            </OnLeave>
+        </Scripts>
+        <ButtonText name="$parentText"/>
+        <NormalFont style="GameFontNormal"/>
+        <HighlightFont style="GameFontHighlight"/>
+        <DisabledFont style="GameFontDisable"/>
+        <HighlightTexture inherits="HagakureButtonHighlightTexture"/>
+    </Button>
+ </Ui>
