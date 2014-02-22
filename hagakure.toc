@@ -25,7 +25,7 @@ libs\Ace3\AceTimer-3.0\AceTimer-3.0.xml
 libs\Ace3\AceConfig-3.0\AceConfig-3.0.xml
 
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
-libs\Ace3\LibDBIcon-1.0\LibDBIcon-1.0.lua
+libs\LibDBIcon-1.0\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
 libs\LibCompress\LibCompress.lua
 
